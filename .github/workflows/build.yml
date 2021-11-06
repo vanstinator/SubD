@@ -1,0 +1,71 @@
+name: Build on Push
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        # os: [macOS-latest, windows-latest]
+        os: [macOS-latest]
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Volta
+        uses: volta-cli/action@v1
+
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+      - name: Install Deps
+        run: 'npm install --build-from-source'
+
+      - name: Add Windows certificate
+        if: matrix.os == 'windows-latest'
+        id: write_file
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'win-certificate.pfx'
+          encodedString: ${{ secrets.WINDOWS_PFX_CERT }}
+
+      # Use on github actions cloud
+      - name: Add MacOS certs
+        if: matrix.os == 'macOS-latest'
+        run: chmod +x bin/add-macos-cert.sh && ./bin/add-macos-cert.sh
+        env:
+          MACOS_PFX_CERT: ${{ secrets.MACOS_C12_CERT }}
+          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+
+      # - name: Build
+      #   env:
+      #     WINDOWS_PFX_FILE: ${{ steps.write_file.outputs.filePath }}
+      #     CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+      #     APPLE_ID: ${{ secrets.APPLE_ID }}
+      #     APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+      #   run: 'npm run electron:build'
+
+      - uses: actions/upload-artifact@v2
+        name: Upload Windows artifacts
+        if: matrix.os == 'windows-latest'
+        with:
+          name: windows.zip
+          path: ./out/make/**/*Setup.exe
+
+      - uses: actions/upload-artifact@v2
+        name: Upload macOS artifacts
+        if: matrix.os == 'macOS-latest'
+        with:
+          name: macOS.zip
+          path: ./out/make/*.dmg
