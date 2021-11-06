@@ -7,7 +7,7 @@ This project's goal is to create a (probably over-engineered) solution to turn y
 Install project dependencies:
 
 ```bash
-yarn
+npm install
 ```
 
 Download DeepSpeech models and audio files:
@@ -21,7 +21,7 @@ Download DeepSpeech models and audio files:
 Run the detection example:
 
 ```bash
-yarn detect
+npm run detect
 ```
 
 ## What's Under The Hood?
