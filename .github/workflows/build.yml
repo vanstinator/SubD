@@ -68,4 +68,4 @@ jobs:
         if: matrix.os == 'macOS-latest'
         with:
           name: macOS.zip
-          path: ./out/make/*.dmg
+          path: ./client/out/make/*.dmg
