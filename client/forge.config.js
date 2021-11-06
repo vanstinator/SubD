@@ -15,8 +15,8 @@ module.exports = {
       'signature-flags': 'library'
     },
     osxNotarize: {
-      appleId: 'justinvdhooft@gmail.com',
-      appleIdPassword: 'a46ISmamin!'
+      appleId: process.env.APPLE_ID,
+      appleIdPassword: process.env.APPLE_ID_PASSWORD
     },
     extendInfo: {
       NSAppTransportSecurity: {
