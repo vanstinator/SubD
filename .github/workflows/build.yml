@@ -67,5 +67,5 @@ jobs:
         name: Upload macOS artifacts
         if: matrix.os == 'macOS-latest'
         with:
-          name: macOS.zip
+          name: macOS-x64
           path: ./client/out/make/*.dmg
