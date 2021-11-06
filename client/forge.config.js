@@ -9,7 +9,7 @@ module.exports = {
     osxSign: {
       entitlements: './bin/entitlements.plist',
       'entitlements-inherit': './bin/entitlements.plist',
-      'gatekeeper-assess': true,
+      'gatekeeper-assess': false,
       hardenedRuntime: true,
       identity: 'Developer ID Application: Justin Vanderhooft (2RSKA7RG4C)',
       'signature-flags': 'library'
