@@ -1,0 +1,36 @@
+# SubD
+
+This project's goal is to create a (probably over-engineered) solution to turn your bad subtitles and into great subtitles.
+
+## Setup
+
+Install project dependencies:
+
+```bash
+yarn
+```
+
+Download DeepSpeech models and audio files:
+
+```bash
+./bin/deepspeech-setup.sh
+```
+
+### Example
+
+Run the detection example:
+
+```bash
+yarn detect
+```
+
+## What's Under The Hood?
+
+### DeepSpeech
+
+DeepSpeech is an open source Speech-To-Text engine, using a model trained by machine learning.
+https://deepspeech.readthedocs.io/en/r0.9/index.html
+
+### FFMPEG
+
+We use ffmpeg to take any input media and decode into raw PCM audio for deepspeech.
