@@ -1,13 +1,25 @@
-import { spawn } from 'child_process';
-import pathToFfmpeg from 'ffmpeg-static';
+import { execSync, spawn } from 'child_process';
+import ffmpeg from 'ffmpeg-static';
+import ffprobe from 'ffprobe-static';
 import { Readable } from 'stream';
-import tmpFile from 'utils/tmpFile';
-import { getDesiredSampleRate } from './detectSpeech';
+import { getDesiredSampleRate } from 'lib/detectSpeech';
 
-export default function extractAudio(inputFile: string): Readable {
+function getInputDuration(inputFile: string) {
+  const result = execSync(
+    `"${ffprobe.path}" -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${inputFile}"`
+  ).toString();
+  return result ? parseFloat(result) : -1;
+}
+
+export interface AudioResult {
+  duration: number;
+  stream: Readable;
+}
+
+export default function extractAudio(inputFile: string): AudioResult {
   const sampleRate = getDesiredSampleRate();
-
-  const child = spawn(pathToFfmpeg, [
+  const duration = getInputDuration(inputFile);
+  const child = spawn(ffmpeg, [
     '-i',
     inputFile,
     '-hide_banner',
@@ -33,5 +45,5 @@ export default function extractAudio(inputFile: string): Readable {
       throw new Error(`ffmpeg exited with code: ${code}`);
     }
   });
-  return child.stdout;
+  return { duration, stream: child.stdout };
 }

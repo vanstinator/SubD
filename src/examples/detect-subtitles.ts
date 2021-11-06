@@ -1,14 +1,26 @@
 import 'config';
+import fs from 'fs';
 import extractAudio from 'lib/extractAudio';
 import detectSpeech from 'lib/detectSpeech';
+import formatSpeech from 'lib/formatSpeech';
 
-const MOVIE_FILE =
-  'https://archive.org/download/cartoon-network-21st-century/Cartoon%20Network%20-%2021st%20century.mp4';
+const CACHED_RESULTS = './data/cached-results.json';
+const MOVIE_FILE = '/Users/brian/Movies/irobot-clip-2.mkv';
 
-const audioStream = extractAudio(MOVIE_FILE);
-detectSpeech(audioStream)
-  .then(text => {
-    // console.log('speech', text.transcripts?.[0].tokens);
-    console.log('Detected text:', text);
-  })
-  .catch(console.error);
+function processText(text) {
+  const words = formatSpeech(text);
+  console.log('words', words);
+}
+
+if (fs.existsSync(CACHED_RESULTS)) {
+  const text = JSON.parse(fs.readFileSync(CACHED_RESULTS).toString());
+  processText(text);
+} else {
+  detectSpeech(extractAudio(MOVIE_FILE))
+    .then(text => {
+      fs.writeFileSync(CACHED_RESULTS, JSON.stringify(text));
+      console.log('speech', text.transcripts?.[0].tokens);
+      processText(text);
+    })
+    .catch(console.error);
+}
