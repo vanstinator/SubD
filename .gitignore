@@ -2,4 +2,4 @@ data
 dist
 node_modules
 .env*
-client/out
+electron/out
