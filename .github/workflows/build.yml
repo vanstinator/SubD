@@ -14,7 +14,7 @@ jobs:
         os: [macOS-latest]
     defaults:
       run:
-        working-directory: client
+        working-directory: electron
 
     steps:
       - name: Check out Git repository
