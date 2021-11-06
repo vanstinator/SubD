@@ -4,7 +4,7 @@ KEY_CHAIN=build.keychain
 CERTIFICATE_P12=certificate.p12
 
 # Recreate the certificate from the secure environment variable
-echo $MACOS_PFX_CERT | base64 --decode > $CERTIFICATE_P12
+echo $MACOS_C12_CERT | base64 --decode > $CERTIFICATE_P12
 
 #create a keychain
 security create-keychain -p actions $KEY_CHAIN
