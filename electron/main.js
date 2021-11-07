@@ -14,7 +14,7 @@ function createWindow() {
 
   if (process.env.NODE_ENV === 'production') {
     // load static production build
-    win.loadFile(path.join(__dirname, '../client/build/index.html'));
+    win.loadFile(path.join(__dirname, './html/index.html'));
   } else {
     // load dev server
     win.loadURL('http://localhost:3000');
