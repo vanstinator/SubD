@@ -49,12 +49,6 @@ jobs:
       - name: Install Deps
         run: 'npm install'
 
-      - name: Build
-        run: 'npm run build'
-
-      - name: Copy React Bundle
-        run: 'cp -R ./client/build ./dist/html'
-
       - name: Make Electron App
         env:
           WINDOWS_PFX_FILE: ${{ steps.write_file.outputs.filePath }}
