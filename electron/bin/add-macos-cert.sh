@@ -8,14 +8,11 @@ echo $MACOS_C12_CERT | base64 --decode > $CERTIFICATE_P12
 
 #create a keychain
 security create-keychain -p actions $KEY_CHAIN
-
-# Make the keychain the default so identities are found
+security set-keychain-settings -lut 21600 $KEY_CHAIN
 security default-keychain -s $KEY_CHAIN
-
-# Unlock the keychain
 security unlock-keychain -p actions $KEY_CHAIN
 
-security import $CERTIFICATE_P12 -k $KEY_CHAIN -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign;
+security import $CERTIFICATE_P12 -k $KEY_CHAIN -P $CERTIFICATE_PASSWORD;
 
 security set-key-partition-list -S apple-tool:,apple: -s -k actions $KEY_CHAIN
 
