@@ -17,7 +17,8 @@ module.exports = {
     osxNotarize: {
       tool: 'notarytool',
       appleId: process.env.APPLE_ID,
-      appleIdPassword: process.env.APPLE_ID_PASSWORD
+      appleIdPassword: process.env.APPLE_ID_PASSWORD,
+      teamId: '2RSKA7RG4C'
     },
     extendInfo: {
       NSAppTransportSecurity: {
