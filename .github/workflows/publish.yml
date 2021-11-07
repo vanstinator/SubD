@@ -12,9 +12,6 @@ jobs:
       matrix:
         # os: [macOS-latest, windows-latest]
         os: [macOS-latest]
-    defaults:
-      run:
-        working-directory: electron
 
     steps:
       - name: Check out Git repository
@@ -29,8 +26,6 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-modules-
-      - name: Install Deps
-        run: 'npm install --build-from-source'
 
       - name: Add Windows certificate
         if: matrix.os == 'windows-latest'
@@ -48,7 +43,10 @@ jobs:
           MACOS_C12_CERT: ${{ secrets.MACOS_C12_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
 
-      - name: Build
+      - name: Install dependencies
+        run: 'npm install'
+
+      - name: Build Electron app
         env:
           WINDOWS_PFX_FILE: ${{ steps.write_file.outputs.filePath }}
           CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
@@ -63,7 +61,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
-          file: ./electron/out/make/squirrel.windows/x64/**
+          file: ./out/make/squirrel.windows/x64/**
           tag: ${{ github.ref }}
           overwrite: true
 
@@ -73,6 +71,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
-          file: ./electron/out/make/**
+          file: ./out/make/**
           tag: ${{ github.ref }}
           overwrite: true
