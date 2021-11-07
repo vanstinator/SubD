@@ -1,10 +1,15 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector);
-    if (element) element.innerText = text;
-  };
+import { contextBridge, ipcRenderer } from 'electron';
 
-  for (const dependency of ['chrome', 'node', 'electron']) {
-    replaceText(`${dependency}-version`, process.versions[dependency]);
+export const api = {
+  addIpcListener: (eventName: string, eventListener: (...args: any[]) => void) => {
+    ipcRenderer.on(eventName, eventListener);
+  },
+  removeIpcListener: (eventName: string, eventListener: (...args: any[]) => void) => {
+    ipcRenderer.off(eventName, eventListener);
+  },
+  ipcSend: (eventName: string, eventData: any) => {
+    ipcRenderer.send(eventName, eventData);
   }
-});
+};
+
+contextBridge.exposeInMainWorld('api', api);
