@@ -42,7 +42,6 @@ jobs:
       - name: Add MacOS certs
         if: matrix.os == 'macOS-latest'
         run: chmod +x bin/add-macos-cert.sh && ./bin/add-macos-cert.sh
-        working-directory: electron
         env:
           MACOS_C12_CERT: ${{ secrets.MACOS_C12_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
