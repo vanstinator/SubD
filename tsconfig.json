@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "commonjs",
     "esModuleInterop": true,
     "allowJs": true,
     "target": "es6",
@@ -11,6 +11,5 @@
     "skipLibCheck": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["react-client", "electron", "node_modules"],
   "lib": ["ES2020"]
 }
