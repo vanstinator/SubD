@@ -41,7 +41,6 @@ jobs:
       # Use on github actions cloud
       - name: Add MacOS certs
         if: matrix.os == 'macOS-latest'
-        working-directory: electron
         run: chmod +x bin/add-macos-cert.sh && ./bin/add-macos-cert.sh
         env:
           MACOS_C12_CERT: ${{ secrets.MACOS_C12_CERT }}
