@@ -7,9 +7,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import BuildIcon from '@mui/icons-material/BuildCircle';
 import FolderIcon from '@mui/icons-material/Folder';
-import ListItemNavButton from './components/ListItemNavButton';
-import Crawl from './routes/Crawl';
-import Analyze from './routes/Analyze';
+import ListItemNavButton from 'src/components/ListItemNavButton';
+import Crawl from 'src/routes/Crawl';
+import Analyze from 'src/routes/Analyze';
 
 function App() {
   return (

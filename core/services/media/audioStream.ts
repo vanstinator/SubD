@@ -1,8 +1,7 @@
 import { spawn } from 'child_process';
 import pathToFfmpeg from 'ffmpeg-static';
 import { Readable } from 'stream';
-import tmpFile from 'utils/tmpFile';
-import { getDesiredSampleRate } from './detectSpeech';
+import { getDesiredSampleRate } from 'core/services/speech/detect';
 
 export default function extractAudio(inputFile: string): Readable {
   const sampleRate = getDesiredSampleRate();

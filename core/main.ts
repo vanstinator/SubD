@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import registerUpdater from './update';
+import createServer from './services/server';
 import logger from 'electron-log';
 
 const log = logger.scope('main');
@@ -19,7 +20,8 @@ function createWindow() {
 
   win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 }
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await createServer(MAIN_WINDOW_WEBPACK_ENTRY);
   registerUpdater();
   createWindow();
 });

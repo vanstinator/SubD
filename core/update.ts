@@ -36,7 +36,9 @@ export default function registerUpdater() {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       updateUrl = `${server}/update/${os.platform()}_${os.arch()}/${app.getVersion()}/`;
     }
-
+    if (!updateUrl) {
+      return;
+    }
     autoUpdater.setFeedURL({ url: updateUrl });
     autoUpdater.checkForUpdates();
 
