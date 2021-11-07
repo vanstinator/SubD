@@ -4,6 +4,9 @@ on:
   release:
     types: [published]
 
+env:
+  NODE_ENV: production
+
 jobs:
   release:
     runs-on: ${{ matrix.os }}

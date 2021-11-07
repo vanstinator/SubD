@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   packagerConfig: {
     asar: true,
     ignore:
@@ -6,17 +6,6 @@ module.exports = {
     darwinDarkModeSupport: 'true',
     name: 'Sub Dazzle',
     executableName: 'SubDazzle',
-    osxSign: {
-      entitlements: './bin/entitlements.plist',
-      'entitlements-inherit': './bin/entitlements.plist',
-      'gatekeeper-assess': false,
-      hardenedRuntime: true,
-      identity: 'Developer ID Application: Justin Vanderhooft (2RSKA7RG4C)'
-    },
-    osxNotarize: {
-      appleId: process.env.APPLE_ID,
-      appleIdPassword: process.env.APPLE_ID_PASSWORD
-    },
     extendInfo: {
       NSAppTransportSecurity: {
         NSAllowsArbitraryLoads: false,
@@ -55,3 +44,22 @@ module.exports = {
     }
   ]
 };
+
+if (process.env.NODE_ENV === 'production') {
+  config.packagerConfig = {
+    ...config.packagerConfig,
+    osxSign: {
+      entitlements: './bin/entitlements.plist',
+      'entitlements-inherit': './bin/entitlements.plist',
+      'gatekeeper-assess': false,
+      hardenedRuntime: true,
+      identity: 'Developer ID Application: Justin Vanderhooft (2RSKA7RG4C)'
+    },
+    osxNotarize: {
+      appleId: process.env.APPLE_ID,
+      appleIdPassword: process.env.APPLE_ID_PASSWORD
+    }
+  };
+}
+
+module.exports = config;

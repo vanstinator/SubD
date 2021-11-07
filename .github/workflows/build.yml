@@ -2,7 +2,11 @@ name: Build on Push
 
 on:
   push:
+  branches: [main]
   pull_request:
+
+env:
+  NODE_ENV: production
 
 jobs:
   release:
