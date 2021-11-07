@@ -51,7 +51,10 @@ jobs:
 
       - name: Build React
         working-directory: client
-        run: 'npm run build && mv ./build ../electron/html'
+        run: 'npm run build'
+
+      - name: Move React
+        run: 'mv ../client/build ./html'
 
       - name: Build Electron
         env:
