@@ -2,28 +2,6 @@ data
 dist
 node_modules
 .env*
-electron/out
+out
 
-
-# React
-
-# dependencies
-/client/.pnp
-.pnp.js
-
-# testing
-/client/coverage
-
-# production
-/client/build
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.webpack

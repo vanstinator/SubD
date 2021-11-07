@@ -4,16 +4,11 @@ This project's goal is to create a (probably over-engineered) solution to turn y
 
 ## Setup
 
-Install project dependencies:
+Install project dependencies and start with:
 
 ```bash
 npm install
-```
-
-Download DeepSpeech models and audio files:
-
-```bash
-./bin/deepspeech-setup.sh
+npm start
 ```
 
 ### Example
