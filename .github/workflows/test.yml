@@ -1,8 +1,12 @@
-name: Build on Push
+name: Test on Push and PR
 
 on:
   push:
+    branches: [main]
   pull_request:
+
+env:
+  NODE_ENV: production
 
 jobs:
   release:
