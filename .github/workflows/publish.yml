@@ -1,0 +1,78 @@
+name: Build on Push
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        # os: [macOS-latest, windows-latest]
+        os: [macOS-latest]
+    defaults:
+      run:
+        working-directory: electron
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Volta
+        uses: volta-cli/action@v1
+
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+      - name: Install Deps
+        run: 'npm install --build-from-source'
+
+      - name: Add Windows certificate
+        if: matrix.os == 'windows-latest'
+        id: write_file
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'win-certificate.pfx'
+          encodedString: ${{ secrets.WINDOWS_PFX_CERT }}
+
+      # Use on github actions cloud
+      - name: Add MacOS certs
+        if: matrix.os == 'macOS-latest'
+        run: chmod +x bin/add-macos-cert.sh && ./bin/add-macos-cert.sh
+        env:
+          MACOS_C12_CERT: ${{ secrets.MACOS_C12_CERT }}
+          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+
+      - name: Build
+        env:
+          WINDOWS_PFX_FILE: ${{ steps.write_file.outputs.filePath }}
+          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+        run: 'npm run make'
+
+      # Upload build file to the release as an asset
+      - name: Upload Windows Files
+        if: matrix.os == 'windows-latest'
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file_glob: true
+          file: ./electron/out/make/squirrel.windows/x64/**
+          tag: ${{ github.ref }}
+          overwrite: true
+
+      - name: Upload macOS Files
+        if: matrix.os == 'macOS-latest'
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file_glob: true
+          file: ./electron/out/make/**
+          tag: ${{ github.ref }}
+          overwrite: true
