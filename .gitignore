@@ -8,14 +8,14 @@ electron/out
 # React
 
 # dependencies
-/react/.pnp
+/client/.pnp
 .pnp.js
 
 # testing
-/react/coverage
+/client/coverage
 
 # production
-/react/build
+/client/build
 
 # misc
 .DS_Store
