@@ -1,6 +1,6 @@
-const { app, autoUpdater, dialog } = require('electron');
+import { app, autoUpdater, dialog } from 'electron';
 // const logger = require('electron-log');
-const os = require('os');
+import os from 'os';
 
 // const log = logger.scope('updater');
 
@@ -18,7 +18,8 @@ autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
   });
 });
 
-module.exports = function registerUpdater() {
+export default function registerUpdater() {
+  console.log('register update');
   try {
     const server = 'https://downloads.subdazzle.com';
 
@@ -45,4 +46,4 @@ module.exports = function registerUpdater() {
   } catch (e) {
     // log.error('there was a problem registering the updater. bailing out.', e);
   }
-};
+}

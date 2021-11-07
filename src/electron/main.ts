@@ -1,6 +1,6 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
-const registerUpdater = require('./update');
+import { app, BrowserWindow } from 'electron';
+import * as path from 'path';
+import registerUpdater from './update';
 
 // modify your existing createWindow() function
 function createWindow() {
