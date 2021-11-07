@@ -1,7 +1,7 @@
 module.exports = {
   packagerConfig: {
     asar: true,
-    // prune: true,
+    prune: true,
     darwinDarkModeSupport: 'true',
     name: 'Sub Dazzle',
     executableName: 'SubDazzle',
