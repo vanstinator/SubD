@@ -67,4 +67,4 @@ jobs:
         if: matrix.os == 'macOS-latest'
         with:
           name: macOS-x64
-          path: ./electron/out/make/*.dmg
+          path: ./out/make/*.dmg
