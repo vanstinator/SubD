@@ -48,7 +48,7 @@ jobs:
 
       - name: Install React Deps
         working-directory: client
-        run: 'npm run build'
+        run: 'npm install'
 
       - name: Build React
         working-directory: client
