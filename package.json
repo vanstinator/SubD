@@ -13,7 +13,8 @@
     "actions:electron": "wait-on tcp:3000 && npm start -w electron",
     "actions:client": "npm start -w client",
     "actions:server": "./bin/node.sh dist/index.js",
-    "detect": "./bin/node.sh dist/examples/detect-subtitles.js"
+    "detect": "./bin/node.sh dist/examples/detect-subtitles.js",
+    "postinstall": "./bin/deepspeech-setup.sh"
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
