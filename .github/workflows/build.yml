@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         # os: [macOS-latest, windows-latest]
-        os: [macOS-latest]
+        os: [macOS-11]
     defaults:
       run:
         working-directory: electron

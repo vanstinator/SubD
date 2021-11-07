@@ -24,8 +24,8 @@ module.exports = {
         NSAllowsArbitraryLoads: false,
         NSExceptionDomains: {
           'downloads.subdazzle.com': {
-            NSTemporaryExceptionAllowsInsecureHTTPSLoads: false,
-            NSIncludesSubdomains: false,
+            NSTemporaryExceptionAllowsInsecureHTTPSLoads: true,
+            NSIncludesSubdomains: true,
             NSTemporaryExceptionAllowsInsecureHTTPLoads: true,
             NSTemporaryExceptionMinimumTLSVersion: '1.0',
             NSTemporaryExceptionRequiresForwardSecrecy: false
