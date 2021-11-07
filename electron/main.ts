@@ -1,5 +1,8 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import registerUpdater from './update';
+import logger from 'electron-log';
+
+const log = logger.scope('main');
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -34,3 +37,7 @@ app.on('window-all-closed', function () {
 //     if (BrowserWindow.getAllWindows().length === 0) createWindow()
 //   })
 // })
+
+ipcMain.on('analyze.start', (event, files) => {
+  log.info('analyze.start', files);
+});
