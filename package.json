@@ -1,6 +1,6 @@
 {
   "name": "sub-dazzle",
-  "version": "1.0.2",
+  "version": "0.0.1",
   "license": "MIT",
   "private": true,
   "main": "./.webpack/main/index.js",
