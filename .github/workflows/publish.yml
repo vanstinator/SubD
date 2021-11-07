@@ -5,7 +5,7 @@ on:
     types: [published]
 
 env:
-  NODE_ENV: production
+  CI: true
 
 jobs:
   release:

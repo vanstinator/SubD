@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  NODE_ENV: production
+  CI: true
 
 jobs:
   release:
