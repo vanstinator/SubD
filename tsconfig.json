@@ -8,5 +8,7 @@
     "sourceMap": true,
     "outDir": "dist"
   },
-  "lib": ["ES2020"],
+  "include": ["src/**/*"],
+  "exclude": ["react-client", "electron"],
+  "lib": ["ES2020"]
 }

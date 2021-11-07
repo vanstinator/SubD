@@ -4,11 +4,14 @@
   "main": "src/index.js",
   "license": "MIT",
   "workspaces": [
-    "electron"
+    "electron",
+    "react-client"
   ],
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "concurrently 'npm run actions:electron' 'npm run actions:react'",
+    "actions:electron": "cd electron && npm start",
+    "actions:react": "cd react-client && node scripts/start.js",
     "server": "./bin/node.sh dist/index.js",
     "detect": "./bin/node.sh dist/examples/detect-subtitles.js"
   },
