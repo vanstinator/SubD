@@ -55,7 +55,7 @@ jobs:
       - name: Copy React Bundle
         run: 'cp -R ./client/build ./dist/html'
 
-      - name: Build Electron
+      - name: Make Electron App
         env:
           WINDOWS_PFX_FILE: ${{ steps.write_file.outputs.filePath }}
           CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
