@@ -4,7 +4,7 @@
   "description": "A sub a dub dub",
   "main": "main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "electron-forge package",
     "make": "electron-forge make"
@@ -25,6 +25,7 @@
     "npm": "8.1.3"
   },
   "dependencies": {
+    "electron-log": "^4.4.1",
     "electron-squirrel-startup": "^1.0.0"
   },
   "config": {

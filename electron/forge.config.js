@@ -22,7 +22,7 @@ module.exports = {
       NSAppTransportSecurity: {
         NSAllowsArbitraryLoads: false,
         NSExceptionDomains: {
-          'downloads.subdazzle.app': {
+          'downloads.subdazzle.com': {
             NSTemporaryExceptionAllowsInsecureHTTPSLoads: false,
             NSIncludesSubdomains: false,
             NSTemporaryExceptionAllowsInsecureHTTPLoads: true,

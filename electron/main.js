@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
+const registerUpdater = require('./update');
 
 // modify your existing createWindow() function
 function createWindow() {
@@ -19,14 +20,15 @@ function createWindow() {
     win.loadURL('http://localhost:3000');
   }
 }
-
 app.whenReady().then(() => {
+  registerUpdater();
   createWindow();
 });
 
 app.on('window-all-closed', function () {
   // For now, we just quit the app when the window is closed even on macOS
   // if (process.platform !== 'darwin') app.quit()
+  app.quit();
 });
 
 // app.whenReady().then(() => {
