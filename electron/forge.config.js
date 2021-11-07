@@ -11,8 +11,7 @@ module.exports = {
       'entitlements-inherit': './bin/entitlements.plist',
       'gatekeeper-assess': false,
       hardenedRuntime: true,
-      identity: 'Developer ID Application: Justin Vanderhooft (2RSKA7RG4C)',
-      'signature-flags': 'library'
+      identity: 'Developer ID Application: Justin Vanderhooft (2RSKA7RG4C)'
     },
     osxNotarize: {
       appleId: process.env.APPLE_ID,
@@ -23,8 +22,8 @@ module.exports = {
         NSAllowsArbitraryLoads: false,
         NSExceptionDomains: {
           'downloads.subdazzle.com': {
-            NSTemporaryExceptionAllowsInsecureHTTPSLoads: false,
-            NSIncludesSubdomains: false,
+            NSTemporaryExceptionAllowsInsecureHTTPSLoads: true,
+            NSIncludesSubdomains: true,
             NSTemporaryExceptionAllowsInsecureHTTPLoads: true,
             NSTemporaryExceptionMinimumTLSVersion: '1.0',
             NSTemporaryExceptionRequiresForwardSecrecy: false
