@@ -2,23 +2,28 @@ import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import registerUpdater from './update';
 
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
+declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
 // modify your existing createWindow() function
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   });
 
-  if (process.env.NODE_ENV === 'production') {
-    // load static production build
-    win.loadFile(path.join(__dirname, './html/index.html'));
-  } else {
-    // load dev server
-    win.loadURL('http://localhost:3000');
-  }
+  win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  // if (process.env.NODE_ENV === 'production') {
+  //   // load static production build
+  //   win.loadFile(path.join(__dirname, './html/index.html'));
+  // } else {
+  //   // load dev server
+  //   win.loadURL('http://localhost:3000');
+  // }
 }
 app.whenReady().then(() => {
   registerUpdater();

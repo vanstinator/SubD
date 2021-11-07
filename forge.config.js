@@ -1,8 +1,7 @@
 module.exports = {
   packagerConfig: {
     asar: true,
-    ignore:
-      '\\.git(ignore|modules)|node_modules/(\\.cache|.cli-ngcc)|\\.vscode|e2e|\\.editorconfig|\\.eslintrc\\.json|\\.npmrc|main\\.js\\.map|main\\.ts|tsconfig\\.json|tsconfig\\.serve\\.json|\\.env|client',
+    // prune: true,
     darwinDarkModeSupport: 'true',
     name: 'Sub Dazzle',
     executableName: 'SubDazzle',
@@ -32,6 +31,27 @@ module.exports = {
       }
     }
   },
+  plugins: [
+    [
+      '@electron-forge/plugin-webpack',
+      {
+        mainConfig: './webpack/main.webpack.js',
+        renderer: {
+          config: './webpack/renderer.webpack.js',
+          entryPoints: [
+            {
+              html: './public/index.html',
+              js: './src/index.tsx',
+              name: 'main_window',
+              preload: {
+                js: './electron/preload.ts'
+              }
+            }
+          ]
+        }
+      }
+    ]
+  ],
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
