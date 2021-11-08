@@ -1,5 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
+const MAX_SIZE = 100;
+
 enum QUEUE_STATUS {
   COMPLETE = 'complete',
   ERROR = 'error',
@@ -23,6 +25,9 @@ class JobQueue {
   }
 
   queueMedia(media: BasicFile, subtitle: BasicFile) {
+    if (this.queue.length >= MAX_SIZE) {
+      this.queue.splice(0, this.queue.length - MAX_SIZE + 1);
+    }
     this.queue.push({
       id: uuid(),
       media,

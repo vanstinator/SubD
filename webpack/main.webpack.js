@@ -2,9 +2,7 @@ const path = require('path');
 
 module.exports = {
   resolve: {
-    alias: {
-      core: path.resolve(__dirname, 'core/')
-    },
+    // modules: [path.resolve(__dirname, 'core'), 'node_modules'],
     extensions: ['.ts', '.js']
   },
   entry: './core/main.ts',
