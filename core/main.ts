@@ -1,13 +1,12 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import registerUpdater from './update';
-import createServer from './services/server';
-import logger from 'electron-log';
-import queue from 'core/services/queue';
-
-const log = logger.scope('main');
+import { app, BrowserWindow } from 'electron';
+import registerUpdater from 'core/update';
+import createServer from 'core/services/server';
+import ipcListeners from 'core/services/ipc';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+ipcListeners();
 
 // modify your existing createWindow() function
 function createWindow() {
@@ -21,6 +20,7 @@ function createWindow() {
 
   win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 }
+
 app.whenReady().then(async () => {
   await createServer();
   registerUpdater();
@@ -40,8 +40,3 @@ app.on('window-all-closed', function () {
 //     if (BrowserWindow.getAllWindows().length === 0) createWindow()
 //   })
 // })
-
-ipcMain.on('analyze.start', (event, files: { movie: BasicFile; subtitle: BasicFile }) => {
-  log.info('analyze.start', files);
-  queue.queueMedia(files.movie, files.subtitle);
-});
