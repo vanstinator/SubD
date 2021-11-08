@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
   res.send('Hello world');
 });
 
-export default function createServer(entryPoint: string) {
+export default function createServer() {
   return new Promise((resolve, reject) => {
     app.listen(PORT, () => {
       log.info(`API Server listening at ${PORT}`);

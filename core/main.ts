@@ -21,7 +21,7 @@ function createWindow() {
   win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 }
 app.whenReady().then(async () => {
-  await createServer(MAIN_WINDOW_WEBPACK_ENTRY);
+  await createServer();
   registerUpdater();
   createWindow();
 });
