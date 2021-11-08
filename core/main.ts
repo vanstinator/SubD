@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import registerUpdater from './update';
+import createServer from './services/server';
 import logger from 'electron-log';
+import queue from 'core/services/queue';
 
 const log = logger.scope('main');
 
@@ -19,7 +21,8 @@ function createWindow() {
 
   win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 }
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await createServer();
   registerUpdater();
   createWindow();
 });
@@ -38,6 +41,7 @@ app.on('window-all-closed', function () {
 //   })
 // })
 
-ipcMain.on('analyze.start', (event, files) => {
+ipcMain.on('analyze.start', (event, files: { movie: BasicFile; subtitle: BasicFile }) => {
   log.info('analyze.start', files);
+  queue.queueMedia(files.movie, files.subtitle);
 });

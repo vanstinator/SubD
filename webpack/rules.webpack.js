@@ -25,7 +25,12 @@ module.exports = [
     use: ['style-loader', 'css-loader']
   },
   {
-    test: /\.(svg|png|jpe?g|gif)$/i,
+    test: /\.json$/,
+    exclude: /node_modules/,
+    loader: 'json-loader'
+  },
+  {
+    test: /\.(svg|png|jpe?g|gif|ico)$/i,
     loader: 'file-loader',
     options: {
       name: '[path][name].[ext]'

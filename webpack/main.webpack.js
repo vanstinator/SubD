@@ -2,8 +2,8 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js']
   },
-  entry: './electron/main.ts',
+  entry: './core/main.ts',
   module: {
-    rules: require('./rules.webpack'),
+    rules: require('./rules.webpack')
   }
-}
+};

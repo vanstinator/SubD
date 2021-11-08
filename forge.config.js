@@ -33,7 +33,7 @@ const config = {
               js: './src/index.tsx',
               name: 'main_window',
               preload: {
-                js: './electron/preload.ts'
+                js: './core/preload.ts'
               }
             }
           ]

@@ -3,11 +3,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import SelectFileButton from '../components/SelectFileButton';
+import SelectFileButton from 'components/SelectFileButton';
 
 interface AnalyzeFiles {
-  movie?: { name: string; path: string; size: number };
-  subtitle?: { name: string; path: string; size: number };
+  movie?: BasicFile;
+  subtitle?: BasicFile;
 }
 
 export default function Analyze() {
