@@ -1,6 +1,7 @@
+const path = require('path');
+
 module.exports = {
   resolve: {
-    roots: ['./core', './src'],
     extensions: ['.ts', '.tsx', '.js']
   },
   module: {

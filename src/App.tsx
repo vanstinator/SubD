@@ -7,16 +7,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import BuildIcon from '@mui/icons-material/BuildCircle';
 import FolderIcon from '@mui/icons-material/Folder';
-import ListItemNavButton from 'src/components/ListItemNavButton';
-import Crawl from 'src/routes/Crawl';
-import Analyze from 'src/routes/Analyze';
+import ListItemNavButton from './components/ListItemNavButton';
+import Crawl from './routes/Crawl';
+import Analyze from './routes/Analyze';
 
 function App() {
   return (
     <div className="App">
       <Grid container={true} spacing={3}>
         <Grid item={true} xs={3}>
-          <nav aria-label="main mailbox folders">
+          <nav aria-label="main sections">
             <List>
               <ListItem disablePadding>
                 <ListItemNavButton href="/">

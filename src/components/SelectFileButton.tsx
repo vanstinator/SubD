@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import uniqueId from 'src/utils/uniqueId';
+import uniqueId from '../utils/uniqueId';
 
 const Input = styled('input')({
   display: 'none'

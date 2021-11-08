@@ -16,6 +16,13 @@
     "strict": true,
     "isolatedModules": true,
     "baseUrl": ".",
-    "rootDirs": ["core"]
+    // "rootDirs": ["core"],
+    "paths": {
+      //Assuming your components/utilities live in ./src
+      //Update this path as necessary
+      "components/*": ["./src/components/*"],
+      "routes/*": ["./src/routes/*"],
+      "utils/*": ["./src/utils/*"]
+    }
   }
 }
