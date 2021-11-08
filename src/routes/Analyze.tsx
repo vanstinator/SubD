@@ -6,8 +6,8 @@ import Typography from '@mui/material/Typography';
 import SelectFileButton from '../components/SelectFileButton';
 
 interface AnalyzeFiles {
-  movie?: { name: string; path: string; size: number };
-  subtitle?: { name: string; path: string; size: number };
+  movie?: BasicFile;
+  subtitle?: BasicFile;
 }
 
 export default function Analyze() {

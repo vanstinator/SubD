@@ -1,5 +1,5 @@
-import AnalysisQueue from './queue';
+import JobQueue from './queue';
 
-const queue = new AnalysisQueue();
+const queue = new JobQueue();
 
 export default queue;

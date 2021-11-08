@@ -50,6 +50,7 @@
     "@types/node": "^12.20.36",
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",
+    "@types/uuid": "^8.3.1",
     "babel-loader": "^8.2.3",
     "concurrently": "^6.3.0",
     "css-loader": "^6.5.1",

@@ -9,20 +9,20 @@ enum QUEUE_STATUS {
 
 interface QueueItem {
   id: string;
-  media: string;
+  media: BasicFile;
   progress: number;
   status: QUEUE_STATUS;
-  subtitle: string;
+  subtitle: BasicFile;
 }
 
-class AnalysisQueue {
+class JobQueue {
   queue: QueueItem[];
 
   constructor() {
     this.queue = [];
   }
 
-  queueMedia(media: string, subtitle: string) {
+  queueMedia(media: BasicFile, subtitle: BasicFile) {
     this.queue.push({
       id: uuid(),
       media,
@@ -33,4 +33,4 @@ class AnalysisQueue {
   }
 }
 
-export default AnalysisQueue;
+export default JobQueue;

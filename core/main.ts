@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import registerUpdater from './update';
 import createServer from './services/server';
 import logger from 'electron-log';
+import queue from 'core/services/queue';
 
 const log = logger.scope('main');
 
@@ -40,6 +41,7 @@ app.on('window-all-closed', function () {
 //   })
 // })
 
-ipcMain.on('analyze.start', (event, files) => {
+ipcMain.on('analyze.start', (event, files: { movie: BasicFile; subtitle: BasicFile }) => {
   log.info('analyze.start', files);
+  queue.queueMedia(files.movie, files.subtitle);
 });
