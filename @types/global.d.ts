@@ -6,3 +6,5 @@ declare global {
     api: typeof api;
   }
 }
+
+declare module 'tar.gz';

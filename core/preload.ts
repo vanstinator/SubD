@@ -7,8 +7,8 @@ export const api = {
   removeIpcListener: (eventName: string, eventListener: (...args: any[]) => void) => {
     ipcRenderer.off(eventName, eventListener);
   },
-  ipcSend: (eventName: string, eventData: any) => {
-    ipcRenderer.send(eventName, eventData);
+  ipcSend: (eventName: string, ...args: any[]) => {
+    ipcRenderer.send(eventName, ...args);
   }
 };
 
