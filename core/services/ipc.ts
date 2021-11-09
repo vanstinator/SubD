@@ -1,7 +1,13 @@
 import { ipcMain } from 'electron';
 import logger from 'electron-log';
 import queue from 'core/services/queue';
-import { verifyModelFiles, downloadModelFiles, Downloader, DownloadProgress } from 'core/services/speech/download';
+import {
+  getModelPaths,
+  verifyModelFiles,
+  downloadModelFiles,
+  Downloader,
+  DownloadProgress
+} from 'core/services/speech/download';
 
 const log = logger.scope('ipc');
 

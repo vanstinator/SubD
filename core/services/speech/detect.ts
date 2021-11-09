@@ -1,12 +1,14 @@
 import path from 'path';
 import { Model } from 'deepspeech';
 import { Readable } from 'stream';
+import { getModelPaths } from './download';
 
-const MODEL_PATH = path.resolve('./data/deepspeech-0.9.3-models.pbmm');
-const SCORER_PATH = path.resolve('./data/deepspeech-0.9.3-models.scorer');
-
-const model = new Model(MODEL_PATH);
-model.enableExternalScorer(SCORER_PATH);
+const modelPaths = getModelPaths();
+if (!modelPaths.model || !modelPaths.scorer) {
+  throw new Error('Missing one or more required model files');
+}
+const model = new Model(modelPaths.model);
+model.enableExternalScorer(modelPaths.scorer);
 
 export function getDesiredSampleRate() {
   return model.sampleRate();

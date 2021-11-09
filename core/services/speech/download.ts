@@ -10,19 +10,40 @@ import { Writable } from 'stream';
 const log = logger.scope('ipc');
 
 const APP_DIR = app.getPath('userData');
-
+const TARGZ_REGEX = /\.tar\.gz$/;
 const DOWNLOAD_ENDPOINT = 'https://github.com/mozilla/DeepSpeech/releases/download/v0.9.3/';
 
-const FILES = {
-  models: 'deepspeech-0.9.3-models.pbmm',
-  scorer: 'deepspeech-0.9.3-models.scorer',
-  audio: 'audio-0.9.3.tar.gz'
-};
+interface FileDownload {
+  name: string;
+  path: string;
+  dirname?: string;
+}
+interface ModelPaths {
+  model?: string;
+  scorer?: string;
+  audio?: string;
+}
+const FILES: FileDownload[] = [
+  { name: 'model', path: 'deepspeech-0.9.3-models.pbmm' },
+  { name: 'scorer', path: 'deepspeech-0.9.3-models.scorer' },
+  { name: 'audio', dirname: 'audio', path: 'audio-0.9.3.tar.gz' }
+];
 
 export function verifyModelFiles() {
-  return Object.values(FILES).every(file => {
-    return fs.existsSync(path.join(APP_DIR, file));
+  const paths = getModelPaths();
+  return Object.values(getModelPaths()).every(filepath => {
+    return fs.existsSync(filepath);
   });
+}
+
+export function getModelPaths(): ModelPaths {
+  return FILES.reduce((obj, file) => {
+    const filename = file.dirname ? file.dirname : file.path;
+    return {
+      ...obj,
+      [file.name]: path.join(APP_DIR, filename)
+    };
+  }, {});
 }
 
 export interface DownloadProgress {
@@ -59,22 +80,34 @@ export class Downloader extends EventEmitter {
     this.updateProgress();
     const localFile = path.join(APP_DIR, file);
     const downloadUrl = `${DOWNLOAD_ENDPOINT}${file}`;
-    log.info(`Downloading: ${downloadUrl} to:\n ${localFile}`);
     this.streamDownload(downloadUrl, localFile);
   }
+
+  addPath(entry: any) {
+    // TODO Use this function to track downloaded/extracted files in a DB, so we can manage or clean out them later
+    // console.log(entry);
+  }
+
   next() {
     if (this.progress.current + 1 < this.files.length) {
       this.progress.current++;
       this.start();
     } else {
-      console.log('all done');
       this.emit('finish');
     }
   }
 
   streamDownload(downloadUrl: string, localFile: string) {
-    this.downloadStream = got.stream(downloadUrl);
+    const isTarball = TARGZ_REGEX.test(downloadUrl);
 
+    if (!isTarball && fs.existsSync(localFile)) {
+      this.addPath(localFile);
+      this.next();
+      this.updateProgress();
+      return;
+    }
+
+    this.downloadStream = got.stream(downloadUrl);
     this.downloadStream
       .on(
         'downloadProgress',
@@ -88,12 +121,16 @@ export class Downloader extends EventEmitter {
       });
 
     let fileWriterStream: Writable;
-    if (/tar\.gz$/.test(downloadUrl)) {
-      const { name, dir } = path.parse(localFile);
-      const folder = path.join(dir, name);
-      log.info(`folder: ${folder}`);
-      log.info(`APP_DIR: ${APP_DIR}`);
-      fileWriterStream = tar.extract({ cwd: APP_DIR });
+    if (isTarball) {
+      fileWriterStream = tar.extract({
+        cwd: APP_DIR,
+        filter: entry => {
+          return !/^\./.test(path.basename(entry));
+        },
+        onentry: entry => {
+          this.addPath(path.join(APP_DIR, entry.path));
+        }
+      });
     } else {
       fileWriterStream = fs.createWriteStream(localFile);
     }
@@ -102,7 +139,7 @@ export class Downloader extends EventEmitter {
         throw new Error(`Could not write file to system: ${error.message}`);
       })
       .on('finish', () => {
-        console.log(`File downloaded to ${localFile}`);
+        this.addPath(localFile);
         this.next();
         this.updateProgress();
       });
@@ -123,5 +160,5 @@ export class Downloader extends EventEmitter {
 }
 
 export function downloadModelFiles(): Downloader {
-  return new Downloader(Object.values(FILES));
+  return new Downloader(FILES.map(file => file.path));
 }
