@@ -70,4 +70,4 @@ jobs:
         if: matrix.os == 'macOS-latest'
         with:
           name: macOS-x64
-          path: ./out/make/**/*.*
+          path: ./out/make/**/*.dmg
