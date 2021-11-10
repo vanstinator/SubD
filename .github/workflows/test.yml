@@ -14,8 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        # os: [macOS-latest, windows-latest]
-        os: [macOS-latest]
+        os: [macOS-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -71,4 +70,4 @@ jobs:
         if: matrix.os == 'macOS-latest'
         with:
           name: macOS-x64
-          path: ./out/make/*
+          path: ./out/make/**/*.*

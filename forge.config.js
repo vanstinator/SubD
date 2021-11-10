@@ -45,7 +45,9 @@ const config = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'sub_dazzle'
+        exe: 'SubDazzle.exe',
+        remoteReleases: process.env.CI ? `https://downloads.subdazzle.com/update/win32/0.0.0` : undefined,
+        signWithParams: `/f ${process.env['WINDOWS_PFX_FILE']} /p ${process.env['CERTIFICATE_PASSWORD']} /tr http://timestamp.comodoca.com /td sha256`
       }
     },
     {

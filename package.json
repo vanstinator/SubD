@@ -2,6 +2,15 @@
   "name": "sub-dazzle",
   "version": "0.0.1",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Brian Robinson"
+    },
+    {
+      "name": "Justin Vanderhooft"
+    }
+  ],
+  "description": "A subtitles thing",
   "main": "./.webpack/main/index.js",
   "scripts": {
     "start": "electron-forge start",
