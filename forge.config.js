@@ -45,7 +45,7 @@ const config = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'sub_dazzle'
+        exe: 'SubDazzle.exe'
       }
     },
     {
@@ -83,6 +83,13 @@ if (process.env.CI) {
       appleId: process.env.APPLE_ID,
       appleIdPassword: process.env.APPLE_ID_PASSWORD
     }
+  };
+
+  config.makers.find(maker => maker.name === '@electron-forge/maker-squirrel').config = {
+    exe: 'SubDazzle.exe',
+    // TODO enable this line after we cut a first release. Update server responds with errors otherwise
+    // remoteReleases: process.env.CI ? `https://downloads.subdazzle.com/update/win32/0.0.0` : undefined,
+    signWithParams: `/f ${process.env['WINDOWS_PFX_FILE']} /p ${process.env['CERTIFICATE_PASSWORD']} /tr http://timestamp.comodoca.com /td sha256`
   };
 }
 
