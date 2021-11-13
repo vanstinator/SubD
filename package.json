@@ -9,7 +9,7 @@
     "make": "electron-forge make",
     "release": "electron-forge publish",
     "lint": "eslint . --ext js,ts",
-    "postinstall": "./bin/patch-deepspeech.sh"
+    "postinstall": "bin/patch-deepspeech.sh"
   },
   "dependencies": {
     "@emotion/react": "^11.5.0",
