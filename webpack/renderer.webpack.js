@@ -7,8 +7,6 @@ const reactConfig = Object.entries(dotenv.config().parsed)
     return { ...config, [key]: value };
   }, {});
 
-console.log(reactConfig);
-
 module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
