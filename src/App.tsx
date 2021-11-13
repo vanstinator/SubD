@@ -27,8 +27,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    window.api.ipcSend('analyze.startupCheck');
-    window.api.addIpcListener('analyze.startupResult', handleStartupResult);
+    window.api.ipcSend('setup.startupCheck');
+    window.api.addIpcListener('setup.startupResult', handleStartupResult);
   }, []);
 
   return (

@@ -1,7 +1,7 @@
 import express from 'express';
 import logger from 'electron-log';
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8337;
 const log = logger.scope('express');
 const app = express();
 

@@ -1,7 +1,11 @@
 import path from 'path';
-import { Model } from 'deepspeech';
+import { Model, CandidateTranscript } from 'deepspeech';
+import logger from 'electron-log';
 import { Readable } from 'stream';
 import { getModelPaths } from './download';
+import createAudioStream, { getDuration } from './audio';
+
+const log = logger.scope('detection');
 
 const modelPaths = getModelPaths();
 if (!modelPaths.model || !modelPaths.scorer) {
@@ -10,23 +14,31 @@ if (!modelPaths.model || !modelPaths.scorer) {
 const model = new Model(modelPaths.model);
 model.enableExternalScorer(modelPaths.scorer);
 
-export function getDesiredSampleRate() {
-  return model.sampleRate();
+interface SpeechResult {
+  text: { transcripts: CandidateTranscript[] };
+  audioDuration: number;
 }
 
-export default async function detectSpeech(audioStream: Readable) {
+export default async function detectSpeech(
+  mediaPath: string,
+  onProgress: (percent: number) => void
+): Promise<SpeechResult> {
+  const sampleRate = model.sampleRate();
+  const audioDuration = await getDuration(mediaPath);
+  log.info(`mediaPath: ${mediaPath}`);
+  log.info(`audioDuration: ${audioDuration} ${sampleRate}`);
+  const audioStream = createAudioStream(mediaPath, sampleRate);
   return new Promise((resolve, reject) => {
-    let duration = 0;
+    let currentTime = 0;
     const modelStream = model.createStream();
     audioStream.on('data', chunk => {
-      duration += (chunk.length / 2) * (1 / getDesiredSampleRate());
-      process.stdout.write(`processed ${duration} seconds\r`);
+      currentTime += (chunk.length / 2) * (1 / sampleRate);
+      onProgress(currentTime / audioDuration);
       modelStream.feedAudioContent(chunk);
     });
     audioStream.on('close', () => {
-      process.stdout.write('\n');
       const text = modelStream.finishStreamWithMetadata();
-      resolve({ text, duration });
+      resolve({ text, audioDuration });
     });
   });
 }

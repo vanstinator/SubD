@@ -51,7 +51,9 @@ export default function SelectFileButton({
         <label htmlFor={refId}>
           <div>
             <Input accept={accept} id={refId} type="file" onChange={handleSelect} />
-            <Button component="span">{children}</Button>
+            <Button variant="outlined" component="span">
+              {children}
+            </Button>
           </div>
         </label>
       )}

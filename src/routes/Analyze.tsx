@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -40,6 +40,18 @@ export default function Analyze() {
     delete files.subtitle;
     setFiles(files);
   }, [files]);
+  const handleQueueUpdate = useCallback((event, queueData) => {
+    console.log('queueUpdate', queueData);
+  }, []);
+
+  useEffect(() => {
+    window.api.addIpcListener('queue.update', handleQueueUpdate);
+    window.api.ipcSend('queue.get');
+    return function cleanup() {
+      window.api.addIpcListener('queue.update', handleQueueUpdate);
+    };
+  }, [handleQueueUpdate]);
+
   return (
     <Box sx={{ mt: 3 }}>
       <Box sx={{ mb: 3 }}>
