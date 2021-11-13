@@ -27,12 +27,6 @@ export default function groupByWord(data: Metadata): WordGroup[] {
     return group.reduce(
       (prev, current, index) => {
         prev.text += current.text;
-        // if (index === 0 || current.start_time < prev.start_time) {
-        //   prev.start_time = current.start_time;
-        // }
-        // if (index === 0 || current.start_time > prev.start_time) {
-        //   prev.end_time = current.start_time;
-        // }
         return prev;
       },
       {

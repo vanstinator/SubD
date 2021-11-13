@@ -88,18 +88,6 @@ class JobQueue {
         this.postUpdate();
       }
     );
-    // const speech = await detectSpeech(this.queue[this.activeIndex].media.path, (percent) => {
-    //   this.queue[this.activeIndex].progress = percent;
-    //   this.postUpdate();
-    // });
-    // return new Promise((resolve, reject) => {
-    // const stream = audioStream(this.queue[this.activeIndex].media.path);
-    // stream.on('data', (data) => {
-    //   log.info(`Audio stream received: ${data.length} bytes`);
-    // });
-    // stream.on('end', () => {
-    // });
-    // });
   }
 }
 

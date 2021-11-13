@@ -18,13 +18,6 @@ export function getDuration(inputFile: string): Promise<number> {
       reject('Could not determine media duration');
     });
   });
-  // const result = execSync(`"${pathToFfmpeg}" -i "${inputFile}"`).toString();
-  // const matches = result.match(DURATION_REGEX);
-  // if (matches?.length === 4) {
-  //   const [, hours, minutes, seconds] = matches;
-  //   return parseInt(hours, 10) * 3600 + parseInt(minutes, 10) * 60 + parseFloat(seconds);
-  // }
-  // return -1;
 }
 
 export default function extractAudio(inputFile: string, sampleRate: number): Readable {
