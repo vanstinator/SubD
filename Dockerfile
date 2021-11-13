@@ -10,5 +10,5 @@ RUN yarn build
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 8337
 CMD ['node', 'index.js']

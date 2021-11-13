@@ -1,12 +1,10 @@
 import { app, BrowserWindow } from 'electron';
 import registerUpdater from 'core/update';
 import createServer from 'core/services/server';
-import ipcListeners from 'core/services/ipc';
+import 'core/services/ipc/listeners';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
-
-ipcListeners();
 
 // modify your existing createWindow() function
 function createWindow() {

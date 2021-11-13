@@ -23,12 +23,12 @@ export default function DownloadModelFilesDialog(props: { open: boolean; onClose
   const [progress, setProgress] = useState<DownloadProgress>();
 
   const handleDownloadStart = useCallback(() => {
-    window.api.ipcSend('analyze.download.start');
+    window.api.ipcSend('setup.download.start');
     setIsDownloadActive(true);
   }, []);
 
   const handleDownloadCancel = useCallback(() => {
-    window.api.ipcSend('analyze.download.cancel');
+    window.api.ipcSend('setup.download.cancel');
   }, []);
 
   const handleProgress = useCallback((event, progressInfo: DownloadProgress) => {
@@ -48,13 +48,13 @@ export default function DownloadModelFilesDialog(props: { open: boolean; onClose
   }, []);
 
   useEffect(() => {
-    window.api.addIpcListener('analyze.download.progress', handleProgress);
-    window.api.addIpcListener('analyze.download.finished', handleComplete);
-    window.api.addIpcListener('analyze.download.error', handleError);
+    window.api.addIpcListener('setup.download.progress', handleProgress);
+    window.api.addIpcListener('setup.download.finished', handleComplete);
+    window.api.addIpcListener('setup.download.error', handleError);
     return function cleanup() {
-      window.api.removeIpcListener('analyze.download.progress', handleProgress);
-      window.api.removeIpcListener('analyze.download.finished', handleComplete);
-      window.api.removeIpcListener('analyze.download.error', handleError);
+      window.api.removeIpcListener('setup.download.progress', handleProgress);
+      window.api.removeIpcListener('setup.download.finished', handleComplete);
+      window.api.removeIpcListener('setup.download.error', handleError);
     };
   }, [handleComplete, handleError, handleProgress]);
 
