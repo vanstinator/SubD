@@ -9,7 +9,7 @@
     "make": "electron-forge make",
     "release": "electron-forge publish",
     "lint": "eslint . --ext js,ts",
-    "rebuild": "npm rebuild --runtime=electron --target=15.3.0 --disturl=https://atom.io/download/atom-shell --abi=75"
+    "postinstall": "./bin/patch-deepspeech.sh"
   },
   "dependencies": {
     "@emotion/react": "^11.5.0",
